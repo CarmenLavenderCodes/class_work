@@ -1,0 +1,35 @@
+// -- Price depends on quantity
+quantity = <choose a quanity> ;
+
+if ( quantity > 0 ) {
+    price = 100;
+    if ( quantity >= 10 ) {
+        price = 50 ;
+        if ( quantity >= 25 ) {
+            price = 35;
+        }
+    }
+}
+else
+    price = "no purchase" ;
+
+console.log( quantity + ' products will cost ' + price + ' each.' ) ;
+
+<script>
+quantity=67;
+if(quantity>=25){
+    price=35;
+}
+else if( quantity>=10&& quanity<25){
+    price=35;
+}
+else if (quantity>0 && quanity<10)
+{
+    price=100;
+}
+
+
+
+
+
+</script>

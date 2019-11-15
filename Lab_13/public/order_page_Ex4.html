@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+    <script src="./product_data.js">
+    </script>
+    <script>
+     function checkQuantityTextbox(theTextbox) {
+            errs = isNonNegInt(theTextbox.value, true);
+            document.getElementById(theTextbox.name + '_message').innerHTML = errs.join(", ");
+        }
+        function isNonNegInt(q, return_errors = false) {
+            errors = []; // assume no errors at first
+            if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+            if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+            if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+            return return_errors ? errors : (errors.length == 0);
+        }
+
+
+        // get the query string values from form submission
+        let params = (new URL(document.location)).searchParams;
+        GET = {};
+        params.forEach(function (value, key) { GET[key] = value });
+
+
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>document.write(`<h3>${products[0]["model"]} at \$${products[0]["price"]}</h3>`);
+        </script>
+   <form name='quantity_form' action="http://localhost:8080/process_form" method="POST">
+    <script>
+        for (i in products) {
+            document.write(`<h3>${products[i]["model"]} at \$${products[i]["price"]}</h3>`);
+            document.write(`
+    <label for="quantity_textbox">quantity desired:</label>
+    <input type="text" name="quantity_textbox${i}" onkeyup="checkQuantityTextbox(this);">
+    <span id="quantity_textbox${i}_message">Enter a quantity</span>
+    `);
+        }
+    </script>
+    <br>
+    <input type="submit" value='Purchase' name="purchase_submit_button">
+</form>
+</body>
+
+</html>
