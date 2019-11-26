@@ -90,26 +90,26 @@ app.post("/process_registration", function (request, response) {
    errors = [];
    // Username:
    // (a) This should have a minimum of 4 characters and maximum of 10 characters.
-   if (new_user.username.length == 0 || username.length > 4 || username.length < 10) {
+  // if (new_user.username.length == 0 || username.length > 4 || username.length < 10) {
       errors.push("user name must be between 4-10 characters")
-   }
+  // }
    // (b) Only letters and numbers are valid.
-   var letters = [0-9||A-Z];
-   if(new_username != letters){
-      errors.push("Must only use alphanumeric numbers")
-   }
+   //var letters = [0-9||A-Z];
+  // if(new_username != letters){
+   //   errors.push("Must only use alphanumeric numbers")
+  // }
 //(c) Usernames are CASE INSENSITIVE. 
 
    //(d) They must be unique. There may only be one of any particular username.
    //Because of this, you will have to find a way to check the new username against the usernames saved in your file.
-   if (typeof users_reg_data[request.body.username] != 'undefined') {
+   //if (typeof users_reg_data[request.body.username] != 'undefined') {
 
-      errors.push("user name taken");
-   }
+     // errors.push("user name taken");
+  // }
    //Password: (a) This should have a minimum of 6 characters.
-   if(new_user.password.length==0||new_user.password.length<6){
-      errors.push("Must be at least 6 characters");
-   }
+   //if(new_user.password.length==0||new_user.password.length<6){
+     // errors.push("Must be at least 6 characters");
+  // }
    //(b) Any characters are valid. //
    
    //(c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
