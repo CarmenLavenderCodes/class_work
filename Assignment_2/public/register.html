@@ -1,9 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* borrowed from w3schools.com */
+/* https://www.w3schools.com/howto/howto_js_password_validation.asp */
+/* Style all input fields */
+html{background-color: rgb(228, 234, 240);}
+input {
+  width: 25%;
+  padding: 12px;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+/* Style the submit button */
+input[type=submit] {
+  background-color: rgb(111, 179, 177);
+  color: black;
+}
+/* Style the container for inputs */
+.container {
+  background-color:violet;
+  border: black;
+  padding: 20px;
+}
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: rgb(100, 100, 155);
+}
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: rgb(152, 75, 135);
+}
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+</style>
+
 <body>
     <form action="/process_registration" method="POST">
-    <input type="text" name="username" size="40" placeholder="enter username" ><br />
-    <input type="password" name="password" size="40" placeholder="enter password"><br />
-    <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
-    <input type="email" name="email" size="40" placeholder="enter email"><br />
-    <input type="submit" value="Submit" id="submit">
+    <input type="text" name="username" size="40" placeholder="enter username" required pattern="[A-Za-z0-9]{4,10}" oninvalid="this.setCustomValidity('Username requires letters and numbers only, minimum of 4 characters and, maximum of 10 characters.')" oninput="this.setCustomValidity('')"> <br>
+    <input type="password" name="password" size="40" placeholder="Enter Password" required minlength="6" oninvalid="this.setCustomValidity('Please use a minimum 6 characters.')" oninput="this.setCustomValidity('')"> <br>
+    <input type="password" name="repeat_password" size="40" placeholder="enter password again" required minlength="6" oninvalid="this.setCustomValidity('This password must match the above password.')" oninput="this.setCustomValidity('')">   <br/>
+    <input type="email" name="email" size="40" placeholder="enter email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" oninvalid="this.setCustomValidity('Please enter a valid email.')" oninput="this.setCustomValidity('')"> <br>
+    <input type="submit" value="complete process_registration" id="submit">
     </form>
     </body>

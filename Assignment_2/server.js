@@ -1,3 +1,4 @@
+
 //server acts as a middle man
 const querystring = require('querystring');
 var fs = require('fs'); //getting the component fs and loading it in and saving it in the module fs, because when you do a require it creates a module
@@ -90,32 +91,32 @@ app.post("/process_registration", function (request, response) {
    errors = [];
    // Username:
    // (a) This should have a minimum of 4 characters and maximum of 10 characters.
-  // if (new_user.username.length == 0 || username.length > 4 || username.length < 10) {
+   if (new_user.username.length == 0 || username.length > 4 || username.length < 10) {
       errors.push("user name must be between 4-10 characters")
-  // }
+   }
    // (b) Only letters and numbers are valid.
-   //var letters = [0-9||A-Z];
-  // if(new_username != letters){
-   //   errors.push("Must only use alphanumeric numbers")
-  // }
-//(c) Usernames are CASE INSENSITIVE. 
+   var letters = [0 - 9 || A - Z];
+   if (new_username != letters) {
+      errors.push("Must only use alphanumeric numbers")
+   }
+   //(c) Usernames are CASE INSENSITIVE. 
 
    //(d) They must be unique. There may only be one of any particular username.
    //Because of this, you will have to find a way to check the new username against the usernames saved in your file.
-   //if (typeof users_reg_data[request.body.username] != 'undefined') {
+   if (typeof users_reg_data[request.body.username] != 'undefined') {
 
-     // errors.push("user name taken");
-  // }
+      errors.push("user name taken");
+   }
    //Password: (a) This should have a minimum of 6 characters.
-   //if(new_user.password.length==0||new_user.password.length<6){
-     // errors.push("Must be at least 6 characters");
-  // }
+   if (new_user.password.length == 0 || new_user.password.length < 6) {
+      errors.push("Must be at least 6 characters");
+   }
    //(b) Any characters are valid. //
-   
+
    //(c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
 
    //Confirm password: (a) Should make sure that it is the same as the password.
-  
+
 
    //Email address: (a) The format should be X@Y.Z where 
    //(b) X is the user address which can only contain letters, numbers, and the characters “_” and “.” 
@@ -134,12 +135,20 @@ app.post("/process_login", function (request, response) {
    // Process login form POST and redirect to logged in page if ok, back to login page if not
    console.log(request.body);
    the_username = request.body.username;
-   if (typeof users_reg_data[the_username] != 'undefined') {
-      if (users_reg_data[the_username].password == request.body.password)
+   if (typeof users_reg_data[the_username] != 'undefined') {//check if the username exists
+      if (users_reg_data[the_username].password == request.body.password) {//check if the password matches
          response.redirect('invoice.html?' + qstr);
-   } else {
-      response.redirect('/login.html');
+         return;
+      } else {
+         error = "invalid Password";
+
+      } 
+   }else {
+      
+      error = "invalid Username";
    }
+   response.redirect('/login.html?error=' + error);
+
 
 });
 app.use(express.static('./public'));// any get requests that werent found above ask the the server for a file go to public and look for folder
