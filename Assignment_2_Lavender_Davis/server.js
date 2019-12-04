@@ -49,9 +49,11 @@ app.get("/process_page", function (request, response) {
       total_qty = 0; // need to check if something was selected so we will look if the total > 0
       for (i = 0; i < products.length; i++)
          if (typeof params[`quantity${i}`] != 'undefined') {
-            a_qty = params[`quantity${i}`];
+            a_qty = parseInt(params[`quantity${i}`]);
+            if (!a_qty) {
+               a_qty = 0;
+            }
             total_qty += a_qty;
-            console.log(a_qty);
             if (!isNonNegInt(a_qty)) {
                has_errors = true; // oops, invalid quantity
             }
@@ -60,7 +62,7 @@ app.get("/process_page", function (request, response) {
    console.log(has_errors, total_qty);
    qstr = querystring.stringify(request.query);
    // Now respond to errors or redirect to invoice if all is ok
-   if (has_errors || total_qty == 0) {
+   if (has_errors || total_qty === 0) {
       //if quantity data is not valid, send them back to product display
       qstr = querystring.stringify(request.query);
 
@@ -91,12 +93,12 @@ app.post("/process_registration", function (request, response) {
    errors = [];
    // Username:
    // (a) This should have a minimum of 4 characters and maximum of 10 characters.
-   if (new_user.username.length == 0 || username.length > 4 || username.length < 10) {
+   if (new_user.username.length <= 4 && new_user.username.length >= 10) {
       errors.push("user name must be between 4-10 characters")
    }
    // (b) Only letters and numbers are valid.
-   var letters = [0 - 9 || A - Z];
-   if (new_username != letters) {
+   var letters = RegExp("^[0-9a-z]+$", "i");
+   if (!letters.test(new_user.username)) {
       errors.push("Must only use alphanumeric numbers")
    }
    //(c) Usernames are CASE INSENSITIVE. 
@@ -104,11 +106,10 @@ app.post("/process_registration", function (request, response) {
    //(d) They must be unique. There may only be one of any particular username.
    //Because of this, you will have to find a way to check the new username against the usernames saved in your file.
    if (typeof users_reg_data[request.body.username] != 'undefined') {
-
       errors.push("user name taken");
    }
    //Password: (a) This should have a minimum of 6 characters.
-   if (new_user.password.length == 0 || new_user.password.length < 6) {
+   if (new_user.password.length === 0 || new_user.password.length < 6) {
       errors.push("Must be at least 6 characters");
    }
    //(b) Any characters are valid. //
@@ -116,6 +117,9 @@ app.post("/process_registration", function (request, response) {
    //(c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
 
    //Confirm password: (a) Should make sure that it is the same as the password.
+   if (new_user.password !== new_user.repeat_password) {
+      errors.push("Passwords must match");
+   }
 
 
    //Email address: (a) The format should be X@Y.Z where 
@@ -124,13 +128,30 @@ app.post("/process_registration", function (request, response) {
    //(d) Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”.
    // (e) Email addresses are CASE INSENSITIVE.
 
-   //Full Name The users full name. Should only allow letters. No more than 30 characters.
+   //Full Name The users full name. Should only allow letters. No more than 30 characters.\
 
    // all good so save the new user
-   
-
-}
-);
+   console.log(qstr)
+   if (errors.length === 0) {
+      users_reg_data[new_user.username] = {
+         name: new_user.name,
+         password: new_user.password,
+         email: new_user.email
+      }
+      console.log(users_reg_data)
+      fs.writeFile(filename, JSON.stringify(users_reg_data, null, 2), (err) => {
+         if(err) {
+            return console.error(err);
+         } else {
+            console.log("User file updated");
+         }
+      })
+      qstr += "&username=" + new_user.username
+      response.redirect("invoice.html?" + qstr);
+   } else {
+      response.redirect('/register.html?error=' + errors.join(','))
+   }
+});
 
 
 app.post("/process_login", function (request, response) {
@@ -138,7 +159,8 @@ app.post("/process_login", function (request, response) {
    console.log(request.body);
    the_username = request.body.username;
    if (typeof users_reg_data[the_username] != 'undefined') {//check if the username exists
-      if (users_reg_data[the_username].password == request.body.password) {//check if the password matches
+      if (users_reg_data[the_username].password === request.body.password) {//check if the password matches
+         qstr += "&username=" + the_username
          response.redirect('invoice.html?' + qstr);
          return;
       } else {
@@ -153,14 +175,14 @@ app.post("/process_login", function (request, response) {
 
 
 });
-app.use(express.static('./public'));// any get requests that werent found above ask the the server for a file go to public and look for folder
+app.use(express.static('./public'));// any get requests that weren't found above ask the the server for a file go to public and look for folder
 app.listen(8080, () => console.log(`listening on port 8080`));
 
 function isNonNegInt(q, returnErrors = false) {
    errors = []; // assume no errors at first
-   if (q == "") { q = 0; }
+   if (q === "") { q = 0; }
    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
-   return returnErrors ? errors : (errors.length == 0);
+   return returnErrors ? errors : (errors.length === 0);
 }
