@@ -1,7 +1,6 @@
 
 <link href="login.css" rel="stylesheet">
 <style>
-
 html{background-color: rgb(228, 234, 240);}
 input {
   width: 25%;
@@ -11,7 +10,6 @@ input {
   box-sizing: border-box;
   margin-top: 6px;
   margin-bottom: 16px;
-
 /* Style the submit button */
 input[type=submit] {
   background-color: rgb(111, 179, 177);
@@ -59,7 +57,6 @@ input[type=button] {
   left: -35px;
   content: "✖";
 }
-
 </style>
 <body>
     <h1>
@@ -86,7 +83,7 @@ First Punch is on Us!
         <td>Phone Number</td>
         <td>*email:</td>
         <input type="email" name="email" size="40" placeholder="enter email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" oninvalid="this.setCustomValidity('Please enter a valid email.')" oninput="this.setCustomValidity('')"> <br>
-    <input type="submit" value="registration" id="submit">
+    <input type="button" onclick="window.location.href = 'invoice.html';" value="registration" id="submit">
     <br>
     <input type="button" onclick="window.location.href = 'login.html';" value="Back to login" id="submit">
     </form>
