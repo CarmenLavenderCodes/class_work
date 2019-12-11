@@ -1,0 +1,27 @@
+[
+    {
+        "Product": "WaveBraclet",
+        "Price": "$65.00",
+        "image": "Wave-Braclet.jpg"
+    },
+    {
+        "Product": "WaveEarings",
+        "Price": "$50.00",
+        "image": "Wave_earings.jpg"
+    },
+    {
+        "Product": "Necklace",
+        "Price": "$125.00",
+        "image": "Wave_nacklace.jpg"
+    },
+    {
+        "Product": "SeashellBraclet",
+        "Price": "$30.00",
+        "image": "seashell_bangle.jpg"
+    },
+    {
+        "Product": "WaveRing",
+        "Price": "$50.00",
+        "image": "wave_ring.jpg"
+    }
+]

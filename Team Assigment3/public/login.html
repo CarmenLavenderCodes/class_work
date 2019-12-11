@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="login.css" rel="stylesheet">
+  <script>
+    window.onload=function(){
+      const urlParams = new URLSearchParams(window.location.search);
+      if(urlParams.has("error")){
+        alert(urlParams.get("error"));
+      }
+    }
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* borrowed from w3schools.com */
+/* https://www.w3schools.com/howto/howto_js_password_validation.asp */
+/* Style all input fields */
+html{background-color: rgb(228, 234, 240);}
+input {
+  width: 25%;
+  padding: 12px;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: rgb(111, 179, 177);
+  color: black;
+}
+/* Style the submit button */
+input[type=button] {
+  background-color: rgb(111, 179, 177);
+  color: black;
+}
+/* Style the container for inputs */
+.container {
+  background-color:violet;
+  border: black;
+  padding: 20px;
+}
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: rgb(100, 100, 155);
+}
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: rgb(152, 75, 135);
+}
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+</style>
+
+
+</head>
+
+<body>
+    <h1 style="align:center;color:brown;"> Welcome To Morning Brews Customer Loyalty System</h1>
+    <br>
+    <form action="/process_login" method="POST">
+    <input type="text" name="username" size="40" placeholder="enter username" ><br />
+    <input type="password" name="password" size="40" placeholder="enter password"><br />
+    <input type="submit" value="Login" id="submit">
+    <br>
+    <input type="button" onclick="window.location.href = 'register.html';" value="Create an account" id="submit"> <br>
+    <a href="#" onclick="document.getElementById('forgotDiv').style.display = 'block';">I forgot my username or password</a>
+            <div id="forgotDiv" style="display:none;">
+                <br>
+                <label style="color: brown;font-size: 20px;"><b>Email:</b></label> 
+                <input type="email" name="email_textbox">
+                <input type="submit" name="forgot_submit" value="Send me my info">
+  </form>
+
+    <h2>Morning Brew * 600 Kailua Road * (808)-262-7770</h2>
+   
+    
+    </body>

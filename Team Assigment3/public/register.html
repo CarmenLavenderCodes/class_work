@@ -1,0 +1,95 @@
+
+<link href="login.css" rel="stylesheet">
+<style>
+
+html{background-color: rgb(228, 234, 240);}
+input {
+  width: 25%;
+  padding: 12px;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: rgb(111, 179, 177);
+  color: black;
+}
+/* Style the submit button */
+input[type=button] {
+  background-color: rgb(111, 179, 177);
+  color: black;
+}
+/* Style the container for inputs */
+.container {
+  background-color:violet;
+  border: black;
+  padding: 20px;
+}
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: rgb(100, 100, 155);
+}
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: rgb(152, 75, 135);
+}
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+
+</style>
+<body>
+    <h1>
+Register Today to Receive Our Customer Loyalty Punch Card!
+First Punch is on Us!
+    </h1>
+    <h3>
+            Only fields marked with "*" are required
+    </h3>
+    <form action="/process_registration" method="POST">
+        <td>Full Name: </td>
+        <input type="text" name="Full name" size="40" placeholder="Enter your full name">
+        <br>
+        <td>*Desired Username: </td>
+        <input type="text" name="username" size="40" placeholder="enter username" required pattern="[A-Za-z0-9]{4,10}" oninvalid="this.setCustomValidity('Username requires letters and numbers only, minimum of 4 characters and, maximum of 10 characters.')" oninput="this.setCustomValidity('')"> <br>
+        <td>*password: </td>
+        <input type="password" name="password" size="40" placeholder="Enter Password" required minlength="6" oninvalid="this.setCustomValidity('Please use a minimum 6 characters.')" oninput="this.setCustomValidity('')"> <br>
+        <td>*Retype password: </td>
+        <input type="password" name="repeat_password" size="40" placeholder="enter password again" required minlength="6" oninvalid="this.setCustomValidity('This password must match the above password.')" oninput="this.setCustomValidity('')">   <br/>
+        <td>Phone Number</td>
+        <input type="text" name="phone number" size="40" placeholder="Enter your phone number" required patterns="[0-9]{10,11}" required minlength="10" required maxlength="11"  oninvalid="this.setCustomValidity('Please enter a 10 digit number.')" oninput="this.setCustomValidity('')">   <br/>
+        <td>Date of Birth</td>
+        <input type="date" name="dob_textbox" value=""> <br>
+        <td>Phone Number</td>
+        <td>*email:</td>
+        <input type="email" name="email" size="40" placeholder="enter email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" oninvalid="this.setCustomValidity('Please enter a valid email.')" oninput="this.setCustomValidity('')"> <br>
+    <input type="submit" value="registration" id="submit">
+    <br>
+    <input type="button" onclick="window.location.href = 'login.html';" value="Back to login" id="submit">
+    </form>
+    <br>
+    Morning Brew * 600 Kailua Road * (808)-262-7770
+    </body>

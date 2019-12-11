@@ -1,0 +1,163 @@
+
+<script src="./products.js" type="text/javascript"></script>
+<script>
+  let params = (new URL(document.location)).searchParams;//Parses out the URL starting with the file name
+  var quantities = [];//quantities
+  // form was submitted so process the invoice
+  if (params.has('purchase_submit')) {
+    for (i = 0; i < products.length; i++) {
+      if (params.has(`quantity${i}`)) {
+        a_qty = params.get(`quantity${i}`);
+        quantities[i] = a_qty;
+      }
+    }
+  } else {
+    document.write('no form submitted');//if not this text populates
+  }
+  console.log(quantities);
+
+  //log out button bellow
+</script>
+<form action="login.html" method="POST" style="text-align: right;">
+    <input type="submit" name="logout_button" value="Log Out">
+</form>
+<!DOCTYPE html>
+
+
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Style the header */
+    h1 {
+      box-sizing: border-box;
+    }
+   
+    h1 {
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+    }
+    h1 {
+      font-size: 35px;
+    }
+    h1 {
+      color: white;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+   /* Style the header */
+   
+    
+  
+    h3 {
+      text-align: center;
+    }
+    h3 {
+      font-size: 35px;
+    }
+    h3 {
+      color: white;
+    }
+   
+
+  </style>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <h1>
+    <script>
+      //personalized username
+      document.write(`Aloha ${params.get('username')}`);
+      
+      </script>
+  </h1>
+
+  <link href="products-style.css" rel="stylesheet">
+
+</head>
+<br>
+<h3>
+    (click on card to transmit username)
+</h3>
+
+<body>
+  
+
+  
+<script>
+//personalized username
+document.write(`${params.get('username')} has:`);
+</script>
+<br>
+<h6>
+  you have __ till you recieve a free drink!
+  </h6>
+<Br>
+  <h6>
+    last visited
+  </h6>
+
+
+</footer>
+</body>
+<big style="color: brown;"><b>Your Current Information Let Us Know if Things Have Changed:</b></big><br><br>
+<form action="/itm352student/Assignment4/ePunchLoyaltyCard/customer_loyalty.html" method="POST">
+    <table border='0'>
+        <tbody>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="first_name" value="mitch"></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="last_name" value="davis"></td>
+            </tr>
+            <tr>
+                <td>Date of Birth:</td>
+                <td><input type="date" name="dob" value=""></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td>sc0rz</td>
+            </tr>
+            <tr>
+                <td>*Password:</td>
+                <td><input type="password" name="password_textbox" value="davis132"></td>
+            </tr>
+            <tr>
+                <td>*Confirm Password:</td>
+                <td><input type="password" name="com_password_textbox" value="davis132"></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><input type="tel" name="phone_number" value="9528184443"></td>
+            </tr>
+            <tr>
+                <td>E-mail:</td>
+                <td><input type="email" name="email" value="davis117m@gmail.com"></td>
+            </tr>
+        <td><br>
+        <tr>
+            <td><input type="submit" name="update_submit" value="Update"></td>
+            <td id="delete_card_td">
+                <i><small>Delete My Card: </small></i>
+                <input type="checkbox" name="remove_checkbox" onclick="confirm_delete()">
+            </td>
+        </tr>
+        </tbody>
+    </table>  
+</form>
+
+<script>
+
+    function confirm_delete(obj) {
+        document.getElementById('delete_card_td').innerHTML =
+                '<input type=submit name="remove_card_submit" value="Click Here to Delete Your Card">';
+    }
+</script>
+
+</html>

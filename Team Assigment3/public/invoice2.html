@@ -1,0 +1,137 @@
+<style type="text/css">
+
+    body{
+        background: tan;
+    }
+</style>
+
+
+<form action="login.html" method="POST" style="text-align: right;">
+    <input type="submit" name="logout_button" value="Log Out">
+</form>
+<div style='color: brown; text-align: center;'><big><b>Welcome sc0rz!</big></b><br><br><div id='transmittal_status'>(click on card to transmit username)</div></div><table style="background: white; margin: 0px auto;" border=5><tr><td align='center'>
+<a href="#" onclick="transmit_username('sc0rz');">
+
+    <br>
+</td></tr></table> 
+       <table style='text-align: center; margin: 0px auto; color: brown;' border='0'>
+            <tbody>
+                <tr>
+                    <td><br>You Have:<br><b>1</b> <br>Points<br>Only 9 points to a free drink!
+                </tr>
+                <tr>
+                    <td><br>Points Used: <br> 0</td>
+                </tr>
+                <tr>
+                    <td><br>Last Visit: <br> New Loyalty Card!</td>
+                </tr>
+                </tbody>
+        </table><br><br><br><br>
+
+<big style="color: brown;"><b>Your Current Information Let Us Know if Things Have Changed:</b></big><br><br>
+<form action="/itm352student/Assignment4/ePunchLoyaltyCard/customer_loyalty.php" method="POST">
+    <table border='0'>
+        <tbody>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="first_name" value="mitch"></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="last_name" value="davis"></td>
+            </tr>
+            <tr>
+                <td>Date of Birth:</td>
+                <td><input type="date" name="dob" value=""></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td>sc0rz</td>
+            </tr>
+            <tr>
+                <td>*Password:</td>
+                <td><input type="password" name="password_textbox" value="davis132"></td>
+            </tr>
+            <tr>
+                <td>*Confirm Password:</td>
+                <td><input type="password" name="com_password_textbox" value="davis132"></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><input type="tel" name="phone_number" value="9528184443"></td>
+            </tr>
+            <tr>
+                <td>E-mail:</td>
+                <td><input type="email" name="email" value="davis117m@gmail.com"></td>
+            </tr>
+        <td><br>
+        <tr>
+            <td><input type="submit" name="update_submit" value="Update"></td>
+            <td id="delete_card_td">
+                <i><small>Delete My Card: </small></i>
+                <input type="checkbox" name="remove_checkbox" onclick="confirm_delete()">
+            </td>
+        </tr>
+        </tbody>
+    </table>  
+</form>
+
+<script>
+    var transmit_check;
+
+    function transmit_username(uname) {
+        //If already transmitting, cancel and remove customer from queue 
+        // by reloading the page (do not want to set another timeout)
+        if (transmit_check) {
+            clearTimeout(transmit_check);
+            window.location.reload(true);
+            return;
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("transmittal_status").innerHTML =
+                        'Transmitted, click card to cancel. <br>Waiting for reception.';
+                transmit_check = setTimeout(function () {
+                    check_transmittal(uname);
+                }, 5000);
+            }
+        };
+
+        xhttp.open("GET", "transmit_username.php?username=" + uname, false);
+        xhttp.send();
+
+    }
+
+    function check_transmittal(uname) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                info = JSON.parse(this.responseText);
+                if (uname == info.username) {
+                    document.getElementById("transmittal_status").innerHTML +=
+                            '.';
+                    transmit_check = setTimeout(function () {
+                        check_transmittal(uname);
+                    }, 2000);
+                } else {
+                    clearTimeout(transmit_check);
+                    document.getElementById("transmittal_status").innerHTML = "Done!";
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 5000);
+                }
+
+            }
+        };
+
+        xhttp.open("GET", "transmit_username.php?check=" + uname);
+        xhttp.send();
+    }
+
+    function confirm_delete(obj) {
+        document.getElementById('delete_card_td').innerHTML =
+                '<input type=submit name="remove_card_submit" value="Click Here to Delete Your Card">';
+    }
+</script>

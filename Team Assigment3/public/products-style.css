@@ -1,0 +1,125 @@
+/* General */
+ 
+
+html {
+  
+    font-family: 'Veranda',;
+    background-color:burlywood ;
+    font-size: 20
+    px;
+    
+  }
+
+  
+  
+  body {
+    width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Typography */
+  
+  
+  h1 {
+    
+    font-family: 'Veranda',;
+    margin: 1;
+    text-align: center;
+  }
+  
+  
+  h1 {
+    font-size: 5rem;
+    background-size: 48px 48px;
+    background-blend-mode: lighten;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: rgb(30, 0, 255);
+    text-align: right;
+    width: 160px;
+    position: absolute;
+    right: 4%;
+    z-index: 3000;
+    text-shadow: 2px 2px 1px black;
+    line-height: 2rem;
+    padding-top: 0.3rem;
+  }
+  
+  p {
+    font-size: 1.5rem;
+  }
+  
+  
+  /* block styling */
+  
+  
+  header, aside, main, footer {
+    padding: 20px;
+  }
+  
+
+  
+  
+  body > div {
+   
+    display: flex;
+  }
+  
+  
+  footer {
+   
+    border-top: 0;
+  }
+  
+  footer h1 {
+    font-style: italic;
+    font-size: 3rem;
+  }
+  
+  aside {
+    flex: 3;
+  }
+  
+  main {
+    flex: 7;
+  }
+  
+  
+  /*  Form styling */
+  
+  main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  
+
+  
+  aside div {
+    margin-bottom: 20px;
+  }
+  
+  
+  /* Styling the products */
+  
+
+  
+
+  
+  
+  .item {
+    background-size: 234px 24px;
+  }
+  
+  
+  .item img {
+      width: 200px;
+      height: 200px; 
+      
+      display: block;
+      position: absolute;
+      bottom: 0px;
+      
+  }
