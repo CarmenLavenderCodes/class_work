@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <link href="login.css" rel="stylesheet">
+    <link href="base.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./error_display.js"></script>
+    <title>Register</title>
+</head>
+<body>
+<h1>
+    Register Today to Receive Our Customer Loyalty Punch Card!
+    First Punch is on Us!
+</h1>
+<h3>
+    Only fields marked with "*" are required
+</h3>
+<form action="/register" method="POST">
+    <label for="username">*Desired Username: </label>
+    <input type="text" id="username" name="username" size="40" placeholder="enter username" required
+           pattern="[A-Za-z0-9]{4,10}"
+           oninvalid="this.setCustomValidity('Username requires letters and numbers only, minimum of 4 characters and, maximum of 10 characters.')"
+           oninput="this.setCustomValidity('')"> <br>
+    <br>
+
+    <label for="password">*Password: </label>
+    <input type="password" id="password" name="password" size="40" placeholder="Enter Password" required minlength="6"
+           oninvalid="this.setCustomValidity('Please use a minimum 6 characters.')"
+           oninput="this.setCustomValidity('')"> <br>
+    <br>
+
+    <label for="repeat_password">*Retype password: </label>
+    <input type="password" id="repeat_password" name="repeat_password" size="40" placeholder="enter password again"
+           required minlength="6" oninvalid="this.setCustomValidity('This password must match the above password.')"
+           oninput="this.setCustomValidity('')"> <br/>
+    <br>
+
+    <label for="name">Full Name: </label>
+    <input type="text" id="name" name="name" size="40" placeholder="Enter your full name">
+    <br>
+
+    <label for="email">*Email:</label>
+    <input type="email" id="email" name="email" size="40" placeholder="enter email" required
+           pattern="[^@\s]+@[^@\s]+\.[^@\s]+" oninvalid="this.setCustomValidity('Please enter a valid email.')"
+           oninput="this.setCustomValidity('')"> <br>
+    <br>
+
+    <label for="phone_number">Phone Number</label>
+    <input type="text" id="phone_number" name="phone_number" size="40" placeholder="Enter your phone number"
+           pattern="([0-9]{10,11})?" minlength="10" maxlength="11"
+           oninvalid="this.setCustomValidity('Please enter a 10 digit number.')" oninput="this.setCustomValidity('')">
+    <br/>
+    <br>
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" value=""> <br>
+    <br>
+
+    <input type="submit" value="registration" id="submit">
+    <br>
+    <input type="button" onclick="window.location.href = 'login.html';" value="Back to login" id="backToLogin">
+</form>
+<br>
+Morning Brew * 600 Kailua Road * (808)-262-7770
+</body>

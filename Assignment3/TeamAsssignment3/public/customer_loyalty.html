@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="base.css" rel="stylesheet">
+    <style>
+        /* Style the header */
+        h1 {
+            box-sizing: border-box;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+            color: white;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Style the header */
+        h3 {
+            text-align: center;
+            font-size: 35px;
+            color: white;
+        }
+
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./error_display.js"></script>
+    <script src="cookie.js"></script>
+    <script>
+        $(function() {
+            let userCookie = getCookie('user')
+            $('.user-username').text(userCookie.username);
+            $('#username').text(userCookie.username);
+            $('#username-input').val(userCookie.username);
+            $('#name').val(userCookie.name);
+            $('#email').val(userCookie.email);
+            $('#phone_number').val(userCookie.phone_number);
+            $('#dob').val(userCookie.dob);
+
+            let pointsCookie = getCookie('points')
+            $('#current_points').text(pointsCookie.current_points)
+            $('#points_until_drink').text(Math.max(10 - pointsCookie.current_points, 0));
+        })
+    </script>
+    <script>
+
+        function confirm_delete(obj) {
+            document.getElementById('delete_user').innerHTML =
+                `<button id="remove_card" onclick="window.location.href = \'./delete_user?username=${getCookie('user').username}\';">Click Here to Delete Your Card</button>`
+        }
+    </script>
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link href="products-style.css" rel="stylesheet">
+    <title>Customer Loyalty</title>
+
+</head>
+
+<body>
+<form action="/logout" method="GET" style="text-align: right;">
+    <input type="submit" name="logout_button" value="Log Out">
+</form>
+<h1 id="title">Aloha, <span class="user-username"></span></h1>
+<p><span class="user-username"></span> has: <span id="current_points">0</span> points</p>
+<h6>
+    You have <span id="points_until_drink">__</span> till you receive a free drink!
+</h6>
+<h4 style="color: brown;"><b>Your Current Information Let Us Know if Things Have Changed:</b></h4>
+<form action="/update_user" method="POST">
+    <input type="hidden" id="username-input" name="username">
+    <table>
+        <tbody>
+            <tr>
+                <td>Username:</td>
+                <td><span id="username"></span></td>
+            </tr>
+            <tr>
+                <td><label for="password">*Password:</label></td>
+                <td><input type="password" id="password" name="password" required minlength="6" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="com_password">*Confirm Password:</label></td>
+                <td><input type="password" id="com_password" name="com_password" required minlength="6" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" id="name" name="name" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="email">E-mail:</label></td>
+                <td><input type="email" id="email" name="email"
+                           required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="phone_number">Phone Number:</label></td>
+                <td><input type="tel" id="phone_number" name="phone_number"
+                           pattern="([0-9]{10,11})?" minlength="10" maxlength="11" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="dob">Date of Birth:</label></td>
+                <td><input type="date" id="dob" name="dob" value=""></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="update_submit" value="Update"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<div id="delete_user">
+    <label for="remove_checkbox"><i><small>Delete My Card: </small></i></label>
+    <input type="checkbox" id="remove_checkbox" name="remove_checkbox" onclick="confirm_delete()">
+</div>
+</body>
+</html>

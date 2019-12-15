@@ -1,0 +1,13 @@
+#result-container {
+    position: fixed;
+    float: left;
+}
+
+#result-container table {
+    border-collapse: collapse;
+}
+
+#result-container table tr td {
+    border: 1px solid black;
+    padding: .125em;
+}

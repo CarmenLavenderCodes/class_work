@@ -1,0 +1,23 @@
+html {
+    font-family: 'Veranda', sans-serif;
+    background-color: grey;
+    font-size: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 90px;
+    color: brown;
+}
+
+h3 {
+    color: red;
+    text-align: center;
+}
+
+body {
+    text-align: center;
+}
+
+
+

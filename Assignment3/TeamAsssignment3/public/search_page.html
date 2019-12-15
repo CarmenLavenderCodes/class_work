@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+    <link href="login.css" rel="stylesheet">
+    <link href="base.css" rel="stylesheet">
+    <link href="search_page.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./cookie.js"></script>
+    <script src="./error_display.js"></script>
+    <script>
+        let points;
+        $(function () {
+            if (getCookie('user').username !== 'admin')
+                window.location = './manager.html'
+            $('#searchForm').submit(function (e) {
+                e.preventDefault()
+                let searchUsername = $('#search').val()
+                $.post(
+                    '/search_user',
+                    {
+                        username: searchUsername
+                    },
+                    (data) => {
+                        let array = JSON.parse(data)
+                        let matchesAny = false;
+                        let match;
+                        for(let i = 0; i < array.length; i++)
+                            if (array[i].username === searchUsername) {
+                                matchesAny = true
+                                match = array[i]
+                                break;
+                            }
+                        if (array.length === 0)
+                            $('#result-container').html('<span>No user found</span>')
+                        else if (matchesAny)
+                            showOptions(match);
+                        else if (array.length === 1)
+                            showOptions(array[0]);
+                        else
+                            makeTable(array);
+                    }
+                )
+            })
+        })
+
+        function makeTable(array) {
+            let tableHTML = '<table><thead><tr><td>Username</td><td>Name</td><td>Email</td><td>Phone Number</td><td>DOB</td></tr></thead><tbody>'
+            for (let i = 0; i < array.length; i++) {
+                let user = array[i];
+                tableHTML += `<tr><td>${user.username}</td>`
+                tableHTML += `<td>${user.name}</td>`
+                tableHTML += `<td>${user.email}</td>`
+                tableHTML += `<td>${user.phone_number}</td>`
+                tableHTML += `<td>${user.dob}</td></tr>`
+            }
+            tableHTML += '</tbody></table>'
+            $('#result-container').html(tableHTML);
+        }
+
+        function showOptions(user) {
+            $.post('/get_points', {
+                username: user.username
+            }).done((data) => {
+                points = JSON.parse(data);
+                let optionHTML = 'User: ${user.username} <tbody><thead><tr><td>Points</td><td>Used Points</td></tr></thead><tbody>'
+                optionHTML += `<tr><td id="current_points">${points.current_points}</td><td id="points_used">${points.points_used}</td></tr>`
+                optionHTML += `<tr><td><button onClick="add_point()">Add Points</button></td><td><button id="use_points" ${points.current_points >= 10 ? '' : 'disabled'} onClick="use_points()">Use Points</button></td></tr>`
+                optionHTML += '</tbody></table>'
+                $('#result-container').html(optionHTML);
+            })
+        }
+
+        function updatePoints() {
+            $.post('/update_points', points).done(() => {
+                $('#current_points').text(points.current_points)
+                $('#points_used').text(points.points_used)
+                // if (points.current_points >= 10) {
+                //     console.log('enable')
+                //     // if (points_used.attr('disabled'))
+                //         points_used.removeProp('disabled')
+                // } else {
+                //     console.log('disable')
+                //     points_used.attr('disabled', true)
+                // }
+                $('#use_points').prop('disabled', points.current_points < 10);
+
+            })
+        }
+
+        function add_point() {
+            points.current_points ++
+            updatePoints()
+        }
+
+        function use_points() {
+            if (points.current_points >= 10) {
+                points.current_points -= 10;
+                points.points_used += 10;
+                updatePoints();
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="result-container"></div>
+<form id="searchForm">
+    <label for="search">Search: </label>
+    <input type="text" id="search" name="search">
+    <br>
+    <input type="submit" value="Search">
+</form>
+</body>
+</html>

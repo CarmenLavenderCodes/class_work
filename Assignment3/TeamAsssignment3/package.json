@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "team-assignment-3",
+  "description": "A team assignment",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CarmenLavenderCodes/class_work/"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.17.1",
+    "querystring": "^0.2.0",
+    "sqlite3": "^4.1.1"
+  }
+}
