@@ -1,4 +1,4 @@
-//server acts as a middle man
+//server acts as a middle man, also we used the foundation of this document from Port's prototype used in class
 const querystring = require('querystring');
 const fs = require('fs'); //getting the component fs and loading it in and saving it in the module fs, because when you do a require it creates a module
 const express = require('express');
@@ -86,15 +86,15 @@ app.post("/register", function (request, response) {
    
 });
 
-app.post("/process_login", function (request, response) {
-   db.getUser(request.body.username, (user) => {
+app.post("/process_login", function (request, response) {//Process a  login
+   db.getUser(request.body.username, (user) => {//tries to get the reuested user from the database
       let error;
-      if (user) {
-         if (request.body.password === user.password) {
-            delete user.password;
-            response.cookie('user', JSON.stringify(user), cookieOptions);
-            db.getPoints(user.username, (points) => {
-               response.cookie('points', JSON.stringify(points), cookieOptions)
+      if (user) {//if the user exists continue or send to error login
+         if (request.body.password === user.password) {//if the passwerd exists, login , or send to error login
+            delete user.password;//deletes the password out of the user obj so its not in the cookie
+            response.cookie('user', JSON.stringify(user), cookieOptions);//set the user cookie to the user object
+            db.getPoints(user.username, (points) => {//get the points from the user
+               response.cookie('points', JSON.stringify(points), cookieOptions)//set the points user to the points object
                response.redirect('customer_loyalty.html');
             })
             return;
@@ -110,71 +110,71 @@ app.post("/process_login", function (request, response) {
 
 });
 
-app.get('/logout', (request, response) => {
-   response.cookie('user', '', {maxAge: Date.now()})
-   response.redirect('/login.html')
+app.get('/logout', (request, response) => {//logs a user out
+   response.cookie('user', '', {maxAge: Date.now()})//deletes the user cookie
+   response.redirect('/login.html')//sends the user to the login page
 })
 
-app.post('/login_manager', (request, response) => {
+app.post('/login_manager', (request, response) => {//logs the manager in
    let error;
-   if (request.body.password === config['manager-pw'])
-      db.getUser('admin', (user) => {
-         response.cookie('user', JSON.stringify(user))
+   if (request.body.password === config['manager-pw'])//checks if the password is the same as what is in the config file
+      db.getUser('admin', (user) => {//gets the admin user from the database
+         response.cookie('user', JSON.stringify(user))//sets the user cookie to the admin user
          response.redirect('./search_page.html')
       })
-   else {
+   else {//if the password is wrong send back to login page with erroe
       error = 'Incorrect Password';
       response.redirect('./manager.html?error=' + error)
    }
 })
 
-app.post('/search_user', (request, response) => {
-   db.searchUser(request.body.username, (users) => {
-      response.send(JSON.stringify(users))
+app.post('/search_user', (request, response) => {//searches for user
+   db.searchUser(request.body.username, (users) => {//queries the database for any user with the string in their username
+      response.send(JSON.stringify(users))//sends the results of the query to the client
    })
 })
 
-app.post('/update_user', (request, response) => {
+app.post('/update_user', (request, response) => {//updates a user in the database
    if (request.body.password.length !== 0 && request.body.com_password.length !== 0
-       && request.body.password === request.body.com_password) {
-      db.updateUser(request.body, (err) => {
-         if (err) {
-            response.redirect('/customer_loyalty.html?error=Error updating user')
-         } else {
+       && request.body.password === request.body.com_password) {//checks that the password and confirm password match and are not empty
+      db.updateUser(request.body, (err) => {//updates the user in the database
+         if (err) {//if error
+            response.redirect('/customer_loyalty.html?error=Error updating user')//send that error to the user
+         } else {//if no error send a succesful updat message to the user
             response.redirect('/customer_loyalty.html?error=User updated')
          }
       })
-   } else {
+   } else {//if the passwords dont match, send the user a passwords must match message
       response.redirect('/customer_loyalty.html?error=Password required and must match')
    }
 })
 
-app.get('/delete_user', (request, response) => {
-   db.deleteUser(request.query.username, (err) => {
+app.get('/delete_user', (request, response) => {//deletes the user from the database
+   db.deleteUser(request.query.username, (err) => {//sends the delete query to the database
       let error;
-      if (err) {
+      if (err) {//if not error set the error string to a succesful error message
          error = "Error deleting user"
       } else  {
          error = "User deleted"
       }
-      response.cookie('user', '', {maxAge: Date.now()})
-      response.redirect('./login.html?error=' + error)
+      response.cookie('user', '', {maxAge: Date.now()})//delete the user cookie
+      response.redirect('./login.html?error=' + error)//redirect to the login page with the error
    })
 })
 
-app.post('/get_points', (request, response) => {
-   db.getPoints(request.body.username, (points) => {
-      response.send(JSON.stringify(points))
+app.post('/get_points', (request, response) => {//gets a users points
+   db.getPoints(request.body.username, (points) => {//queries the database for a users points
+      response.send(JSON.stringify(points))//sends the response from the database to the client
    })
 })
 
-app.post('/update_points', (request, response) => {
+app.post('/update_points', (request, response) => {//updates a users points
    console.log(request.body)
-   db.updatePoints(request.body, (err) => {
-      if (err) {
+   db.updatePoints(request.body, (err) => {//send the update query to the database
+      if (err) {//if there was an error, send a bad request response to the client with an error
          response.writeHead(400, 'Error updating points', {'content-type': 'text/plain'});
          response.end();
-      } else  {
+      } else  {//if there was no error, send an OK reponse to the client with a points updated message
          response.writeHead(200, 'Points updated', {'content-type': 'text/plain'});
          response.end();
       }
