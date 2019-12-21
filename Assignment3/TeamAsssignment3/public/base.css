@@ -1,5 +1,5 @@
 html{
-    background-color: rgb(228, 234, 240);
+    background-color: white;
 }
 input {
     padding: 12px;
@@ -11,12 +11,12 @@ input {
 }
 /* Style the submit button */
 input[type=submit] {
-    background-color: rgb(111, 179, 177);
+    background-color:white;
     color: black;
 }
 /* Style the submit button */
 input[type=button] {
-    background-color: rgb(111, 179, 177);
+    background-color: white;
     color: black;
 }
 /* Style the container for inputs */
@@ -50,7 +50,7 @@ input[type=button] {
 }
 /* Add a green text color and a checkmark when the requirements are right */
 .valid {
-    color: rgb(100, 100, 155);
+    color:white;
 }
 .valid:before {
     position: relative;
