@@ -34,24 +34,24 @@
     <script src="./error_display.js"></script>
     <script src="cookie.js"></script>
     <script>
-        $(function() {
-            let userCookie = getCookie('user')
-            $('.user-username').text(userCookie.username);
-            $('#username').text(userCookie.username);
-            $('#username-input').val(userCookie.username);
-            $('#name').val(userCookie.name);
-            $('#email').val(userCookie.email);
-            $('#phone_number').val(userCookie.phone_number);
-            $('#dob').val(userCookie.dob);
+        $(function() {//on page load
+            let userCookie = getCookie('user')//get the user cookie from cookie.js
+            $('.user-username').text(userCookie.username);//set all tags with the class user-username text to the username of the user
+            $('#username').text(userCookie.username);//set the username field in the form to the username text
+            $('#username-input').val(userCookie.username);//set the hidden username input value to be the username of the user
+            $('#name').val(userCookie.name);//set the name field to be the name of the user
+            $('#email').val(userCookie.email);//set the emsail field to be the email of the user
+            $('#phone_number').val(userCookie.phone_number);//set the phone number field to be the phone number of the user
+            $('#dob').val(userCookie.dob);//set the dob field to be the dob of the user
 
-            let pointsCookie = getCookie('points')
-            $('#current_points').text(pointsCookie.current_points)
-            $('#points_until_drink').text(Math.max(10 - pointsCookie.current_points, 0));
+            let pointsCookie = getCookie('points')//get the points cookie from cookie.js
+            $('#current_points').text(pointsCookie.current_points)//set the current points span to have the points of the user
+            $('#points_until_drink').text(Math.max(10 - pointsCookie.current_points, 0));//set the points until they use a free drink to be the points until they get a free drink
         })
     </script>
     <script>
 
-        function confirm_delete(obj) {
+        function confirm_delete(obj) {//set the element to be a button that will redirect to delete the user 
             document.getElementById('delete_user').innerHTML =
                 `<button id="remove_card" onclick="window.location.href = \'./delete_user?username=${getCookie('user').username}\';">Click Here to Delete Your Card</button>`
         }
